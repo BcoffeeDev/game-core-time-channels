@@ -4,6 +4,13 @@
   "displayName": "Time Channels",
   "description": "Modular Time Channel System for Unity \u2014 fine-grained control over time flow across systems.",
   "unity": "2019.1",
+  "samples": [
+    {
+      "displayName": "Basic Example",
+      "description": "A basic sample showing how to use this package.",
+      "path": "Samples~/BasicExample"
+    }
+  ],
   "unityRelease": "0b5",
   "documentationUrl": "",
   "changelogUrl": "",

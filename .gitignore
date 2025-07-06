@@ -82,3 +82,6 @@ crashlytics-build.properties
 
 # Android build cache
 **/.utmp/*
+
+# Custom package's samples
+!Samples~
