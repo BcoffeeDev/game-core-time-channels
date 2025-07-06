@@ -1,6 +1,8 @@
 # game-core-time-channels
 
-Modular Time Channel System for Unity — fine-grained control over time flow across systems.
+A lightweight and highly controllable time channel system for Unity — built to replace Unity's global time logic with modular, per-system control.
+
+Unlike Unity’s built-in time system (e.g., `Time.timeScale`), which applies globally, this package allows each gameplay system (like weather, enemies, UI, or players) to operate on its own independently scaled timeline. This enables highly modular behaviors — such as pausing weather while letting players move, slowing enemies while keeping animations smooth, or simulating parallel time effects — that are otherwise difficult or impossible with Unity’s default timing model.
 
 ---
 
@@ -33,6 +35,8 @@ Or use Unity Package Manager:
 
 Make sure you are using Unity 2019.4 or newer to support Git-based packages.
 
+---
+
 ## 🚀 Getting Started
 
 ### 1. Register a time channel
@@ -52,6 +56,18 @@ float dt = TimeChannelManager.Get("Player").DeltaTime;
 ```csharp
 TimeChannelManager.Get("Player").TimeScale = 0.5f; // Slow motion
 ```
+
+## ⚙️ Advanced Usage
+
+- You can bypass the built-in string-based manager and create channels manually:
+  
+  ```csharp
+  var customChannel = TimeChannelFactory.Create(SupportedTime.FixedDeltaTime);
+  customChannel.TimeScale = 0.8f;
+  float dt = customChannel.DeltaTime;
+  ```
+
+- Although this package uses a string-based system to register and access channels, you're free to implement your own mapping layer using `enum`, `Guid`, or any custom key system that fits your architecture.
 
 ---
 
