@@ -1,5 +1,9 @@
 # game-core-time-channels
 
+<div align="center">
+  <img src="images/time-channels-showcase.gif" alt="screen-record" style="max-width: 100%; height: auto;" />
+</div>
+
 A lightweight and highly controllable time channel system for Unity — built to replace Unity's global time logic with modular, per-system control.
 
 Unlike Unity’s built-in time system (e.g., `Time.timeScale`), which applies globally, this package allows each gameplay system (like weather, enemies, UI, or players) to operate on its own independently scaled timeline. This enables highly modular behaviors — such as pausing weather while letting players move, slowing enemies while keeping animations smooth, or simulating parallel time effects — that are otherwise difficult or impossible with Unity’s default timing model.
