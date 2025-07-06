@@ -1,0 +1,22 @@
+{
+  "name": "com.bcoffee-dev.time-channels",
+  "version": "1.0.0",
+  "displayName": "Time Channels",
+  "description": "",
+  "unity": "2019.1",
+  "unityRelease": "0b5",
+  "documentationUrl": "",
+  "changelogUrl": "",
+  "licensesUrl": "",
+ "keywords": [
+    "time",
+    "utility",
+    "channel"
+  ],
+  "author": {
+    "name": "BcoffeeDev",
+    "email": "bcoffee.work@gmail.com",
+    "url": ""
+  }
+}
+
