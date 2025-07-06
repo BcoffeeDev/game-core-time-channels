@@ -66,4 +66,4 @@ Located in `BCF.Core.TimeChannels.Samples`
 
 ## 📄 License
 
-MIT License © 2025 [@bcoffee](https://github.com/bcoffee0630)
+MIT License © 2025 [bcoffee](https://github.com/bcoffee0630)
