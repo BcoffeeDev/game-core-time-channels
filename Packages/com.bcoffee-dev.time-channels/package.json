@@ -2,13 +2,13 @@
   "name": "com.bcoffee-dev.time-channels",
   "version": "1.0.0",
   "displayName": "Time Channels",
-  "description": "",
+  "description": "Modular Time Channel System for Unity \u2014 fine-grained control over time flow across systems.",
   "unity": "2019.1",
   "unityRelease": "0b5",
   "documentationUrl": "",
   "changelogUrl": "",
   "licensesUrl": "",
- "keywords": [
+  "keywords": [
     "time",
     "utility",
     "channel"
@@ -19,4 +19,3 @@
     "url": ""
   }
 }
-

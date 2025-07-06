@@ -1,21 +1,21 @@
 # Changelog
 
-Your description here.
+All notable changes to this project will be documented in this file.
 
-## [1.2.3] - 2025-06-07
+## [1.0.0] - 2025-07-06
 
 ### Added
 
-- Added...
+- Introduced `TimeChannel` class for modular time scaling.
+- Implemented `SupportedTime` enum for Unity built-in time types (`deltaTime`, `fixedDeltaTime`, `unscaledDeltaTime`).
+- Added `TimeChannelFactory` to abstract channel creation by type.
+- Added `TimeChannelManager` with string-based registration for flexible channel naming.
+- Included sample demo:
+  - `TimeChannelDemo.cs` — controls player movement and weather with individual time channels.
+  - `Raindrop.cs` — shows per-object motion based on a custom time channel.
+- Enabled runtime pausing/resuming of specific time channels via keyboard/mouse input.
 
-### Fixed
+### Notes
 
-- Fixed...
-
-### Changed
-
-- Changed...
-
-### Removed
-
-- Removed...
+- This is the initial stable release for open-source use.
+- Designed for use under `Packages/com.bcoffee-dev.time-channels` in Unity.
