@@ -57,10 +57,18 @@ TimeChannelManager.Get("Player").TimeScale = 0.5f; // Slow motion
 
 ## 🧪 Sample Included
 
-Located in `BCF.Core.TimeChannels.Samples`
+This package includes a basic usage sample available via Unity's Package Manager.
 
-- Press **Space** to toggle the player movement
-- Click **Left Mouse Button** to toggle falling raindrops (weather)
+### To import the sample:
+
+1. Open **Window > Package Manager**
+2. Select `Time Channels`
+3. Click the **Samples** tab
+4. Click **Import** on **BasicExample**
+
+The sample demonstrates:
+- Independent time control for player and weather
+- Toggling movement and raindrops via keyboard/mouse
 
 ---
 
