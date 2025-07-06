@@ -19,7 +19,7 @@ Modular Time Channel System for Unity — fine-grained control over time flow ac
 You can install this package via Git URL by adding the following to your `manifest.json`:
 
 ```json
-"com.bcoffee-dev.time-channels": "https://github.com/bcoffee0630/game-core-time-channels.git?path=Packages/com.bcoffee-dev.time-channels"
+"com.bcoffee-dev.time-channels": "https://github.com/BcoffeeDev/game-core-time-channels.git?path=Packages/com.bcoffee-dev.time-channels"
 ```
 
 Or use Unity Package Manager:
@@ -28,7 +28,7 @@ Or use Unity Package Manager:
 2. Click the **+** button and select **Add package from Git URL...**
 3. Paste the URL:
    ```
-   https://github.com/bcoffee0630/game-core-time-channels.git?path=Packages/com.bcoffee-dev.time-channels
+   https://github.com/BcoffeeDev/game-core-time-channels.git?path=Packages/com.bcoffee-dev.time-channels
    ```
 
 Make sure you are using Unity 2019.4 or newer to support Git-based packages.
