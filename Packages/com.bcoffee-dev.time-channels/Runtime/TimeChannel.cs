@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 namespace BCF.Core.TimeChannels
 {
@@ -7,10 +8,23 @@ namespace BCF.Core.TimeChannels
     /// </summary>
     public class TimeChannel
     {
+        private float _timeScale;
+        
         public SupportedTime Type { get; }
-        public float TimeScale { get; set; }
+
+        public float TimeScale
+        {
+            get => _timeScale;
+            set
+            {
+                if (Mathf.Approximately(_timeScale, value)) return; // command this line if you want to trigger callback with same value.
+                _timeScale = value;
+                OnTimeScaleChanged?.Invoke(_timeScale);
+            }
+        }
 
         private readonly Func<float> _baseTimeProvider;
+        public event Action<float> OnTimeScaleChanged; 
 
         public TimeChannel(SupportedTime type, Func<float> baseTimeProvider, float timeScale = 1f)
         {
