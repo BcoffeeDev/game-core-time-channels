@@ -12,11 +12,11 @@ namespace BCF.Core.TimeChannels
         /// <summary>
         /// Registers a new time channel with the given name and time source. Does nothing if the name already exists.
         /// </summary>
-        public static TimeChannel Register(string name, SupportedTime type, float timeScale = 1f)
+        public static TimeChannel Register(string name, SupportedTime type, float defaultTimeScale = 1f)
         {
             if (!_channels.ContainsKey(name))
             {
-                _channels[name] = TimeChannelFactory.Create(type, timeScale);
+                _channels[name] = TimeChannelFactory.Create(type, defaultTimeScale);
             }
             
             return _channels[name];
