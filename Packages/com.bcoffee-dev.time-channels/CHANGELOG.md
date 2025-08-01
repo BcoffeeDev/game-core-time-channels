@@ -2,15 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
-## [1.1.0] - 2025-07-12
+## [1.1.0] - 2025-08-02
 
 ### Added
 
-- Added `OnTimeScaleChanged` event to `TimeChannel.cs`, allowing subscribers to react when the time scale is modified.
+- Added `OnTimeScaleChanged` event to `TimeChannel.cs`, allowing subscribers to react when the `TimeScale` is modified.
+- Added `TimeChannelSignal` to support more flexible time control possibilities. This update includes a sample for reference. .
 
 ### Changed
 
 - Modified `TimeChannelManager.Register` to return the registered channel. If the channel already exists, it is returned instead of creating a new one.
+- Renamed `timeScale` parameter to `defaultTimeScale`.
 
 ## [1.0.0] - 2025-07-06
 
