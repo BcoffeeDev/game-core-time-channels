@@ -85,3 +85,5 @@ crashlytics-build.properties
 
 # Custom package's samples
 !Samples~
+/Assets/Samples/*
+/Assets/Samples.meta
