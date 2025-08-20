@@ -121,6 +121,18 @@ To import samples:
 
 ---
 
+## 🎥 Showcase
+
+Here are short demo videos demonstrating the package in action:
+
+- **Basic Example**  
+  [▶ Watch basic_example.mp4](./showcase/basic_example.mp4)
+
+- **Time Control Example**  
+  [▶ Watch time_control_example.mp4](./showcase/time_control_example.mp4)
+
+---
+
 ## 🆕 What's New
 
 - Added support for multiple signal types in `TimeChannelSignal`.
