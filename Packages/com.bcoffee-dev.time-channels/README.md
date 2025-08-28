@@ -1,134 +1,111 @@
-# game-core-time-channels
+# Time Channels for Unity
 
-A lightweight and highly controllable time channel system for Unity — designed to replace Unity's global `Time.timeScale` with modular, per-system control.
+A lightweight, modular time control system that replaces Unity's global `Time.timeScale` with per-system time scaling.
 
----
+## Why Use Time Channels?
 
-## Why Not Use `Time.timeScale`?
+Unity's `Time.timeScale` affects everything globally. Time Channels let you:
 
-Unity's built-in `Time.timeScale` affects the entire game globally, which limits your ability to create nuanced time effects. For example, you can't easily:
+- Control individual systems independently
+- Pause UI while gameplay continues  
+- Create slow-motion effects for specific objects
+- Run multiple timelines simultaneously
 
-- Pause UI while gameplay continues.
-- Slow down enemies without affecting player controls.
-- Run multiple independent timelines in parallel.
+## Quick Start
 
-`game-core-time-channels` solves these problems by allowing each gameplay system to operate on its own independently scaled timeline.
-
----
-
-## ✨ Features
-
-- **Per-System Time Scaling**: Assign unique time scales to players, enemies, weather, UI, and more.
-- **Modular Architecture**: Clean separation of channel creation, management, and usage.
-- **String-Based Channel Naming**: Easily register and retrieve custom time channels by name.
-- **Pause/Resume Per Channel**: Control specific systems without impacting the entire game.
-- **Flexible Signal System**: Use `TimeChannelSignal` to create complex, dynamic time effects.
-
----
-
-## ⚙️ Requirements
-
-- Unity 2019.4 or newer.
-- Supports Git-based package installation.
-
----
-
-## 🚀 Quick Start
-
-### 1. Register a time channel
+### Basic Usage
 
 ```csharp
+// Register a time channel
 TimeChannelManager.Register("Player", SupportedTime.DeltaTime);
-```
 
-### 2. Access time in your Update loop
-
-```csharp
+// Use in your Update loop
 float dt = TimeChannelManager.Get("Player").DeltaTime;
+transform.Translate(Vector3.forward * speed * dt);
+
+// Control time scale
+TimeChannelManager.Get("Player").TimeScale = 0.5f; // Slow motion
 ```
 
-### 3. Adjust time scale at runtime
+### Advanced Usage with Signals
 
 ```csharp
-TimeChannelManager.Get("Player").TimeScale = 0.5f; // Slow motion effect
+public class MovingObject : MonoBehaviour
+{
+    [SerializeField] private TimeChannelSignal signal;
+    
+    void Update()
+    {
+        // Automatically uses the signal's time channel
+        float dt = signal.Channel.DeltaTime;
+        transform.Translate(Vector3.forward * speed * dt);
+    }
+}
 ```
 
----
+## Core Components
 
-## 📖 Recipes
+| Component | Purpose |
+|-----------|---------|
+| `TimeChannelManager` | Register and manage named channels |
+| `TimeChannel` | Core time channel with `DeltaTime` and `TimeScale` |
+| `TimeChannelFactory` | Create standalone channels |
+| `TimeChannelSignal` | Advanced time control effects |
 
-- **Create a custom time channel without the manager:**
+## Common Patterns
+
+**Pause/Resume System:**
+```csharp
+var channel = TimeChannelManager.Get("Enemies");
+float prevScale = channel.TimeScale;
+
+// Pause
+channel.TimeScale = 0f;
+
+// Resume  
+channel.TimeScale = prevScale;
+```
+
+**Independent Timelines:**
+```csharp
+// Different systems, different time scales
+TimeChannelManager.Register("Player", SupportedTime.DeltaTime);
+TimeChannelManager.Register("Weather", SupportedTime.DeltaTime);
+TimeChannelManager.Register("UI", SupportedTime.UnscaledDeltaTime);
+
+TimeChannelManager.Get("Player").TimeScale = 1.0f;   // Normal speed
+TimeChannelManager.Get("Weather").TimeScale = 0.3f;  // Slow weather
+TimeChannelManager.Get("UI").TimeScale = 1.0f;       // Always normal
+```
+
+## Samples
+
+Import samples via **Window > Package Manager > Time Channels > Samples**:
+
+- **BasicExample**: Fundamental usage patterns
+- **TimeControlExample**: Advanced effects with `TimeChannelSignal`
+
+## Best Practices
+
+- Register channels early (e.g., in `Awake()` or `Start()`)
+- Use meaningful channel names ("Player", "Enemies", "Weather")
+- Clean up channels when no longer needed with `TimeChannelManager.Unregister()`
+- Avoid mixing Unity's global `Time.timeScale` with Time Channels
+
+## Events and Callbacks
 
 ```csharp
-var customChannel = TimeChannelFactory.Create(SupportedTime.FixedDeltaTime);
-customChannel.TimeScale = 0.8f;
-float dt = customChannel.DeltaTime;
+var channel = TimeChannelManager.Get("Player");
+channel.OnTimeScaleChanged += (newScale) => {
+    Debug.Log($"Player time scale changed to: {newScale}");
+};
 ```
 
-- **Pause and resume a specific channel:**
+## Requirements
 
-```csharp
-var enemy = TimeChannelManager.Register("Enemy", SupportedTime.DeltaTime);
-
-// Pause: set scale to 0 (remember previous scale if you need to restore it)
-float prevScale = enemy.TimeScale;
-enemy.TimeScale = 0f;
-
-// Resume: restore previous scale (or set to 1f if you want the default)
-enemy.TimeScale = prevScale; // or: enemy.TimeScale = 1f;
-```
-> `TimeChannel` has no built-in `Pause()`/`Resume()` methods. Pausing is done by setting `TimeScale` to `0f`, and resuming by restoring a non-zero scale.
-
-- **Use `TimeChannelSignal` for advanced effects:**
-
-`TimeChannelSignal` lets you send signals to one or multiple channels to produce various time effects such as slow motion, speed-up, freeze, or complete overrides. This flexible system allows you to compose complex time behaviors dynamically.
-
-> Note: The included sample demonstrates only one possibility (slow-motion), but `TimeChannelSignal` supports a wide range of time manipulation effects.
+- Unity 2019.4 or newer
+- No additional dependencies
 
 ---
 
-## 📚 API Overview
-
-- `TimeChannelManager` — Register, retrieve, and manage named time channels.
-- `TimeChannel` — The core time channel object with properties like `DeltaTime`, `TimeScale`, and control methods.
-- `TimeChannelFactory` — Create custom time channels independent of the manager.
-- `TimeChannelSignal` — Send signals for complex time control across channels.
-
----
-
-## ⚠️ Notes & Pitfalls
-
-- Avoid relying on Unity’s global `Time.timeScale` if using this package.
-- Remember to register all channels before use.
-- Manage channel lifecycles carefully to prevent memory leaks.
-- When mixing built-in Unity time and time channels, be mindful of synchronization issues.
-
----
-
-## 🧪 Samples Included
-
-The package includes two samples accessible via Unity Package Manager:
-
-- **BasicExample**: Demonstrates fundamental usage of time channels.
-- **TimeControlExample**: Shows how to use `TimeChannelSignal` for slow-motion effects (note: `TimeChannelSignal` supports many more effects beyond this demo).
-
-To import samples:
-
-1. Open **Window > Package Manager**
-2. Select `Time Channels`
-3. Click the **Samples** tab
-4. Import the desired sample
-
----
-
-## 🆕 What's New
-
-- Added support for multiple signal types in `TimeChannelSignal`.
-- Improved performance for channel updates.
-- Enhanced documentation and samples.
-
----
-
-## 📄 License
-
-MIT License © 2025 [Bcoffee](https://github.com/bcoffee0630)
+For more examples and detailed documentation, visit the [GitHub repository](https://github.com/bcoffee0630/game-core-time-channels).
