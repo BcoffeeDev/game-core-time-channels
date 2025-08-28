@@ -8,9 +8,9 @@ namespace BCF.Core.TimeChannels
     /// </summary>
     public static class TimeChannelFactory
     {
-        public static TimeChannel Create(SupportedTime type, float timeScale = 1f)
+        public static TimeChannel Create(SupportedTime type, float defaultTimeScale = 1f)
         {
-            return new TimeChannel(type, GetProvider(type), timeScale);
+            return new TimeChannel(type, GetProvider(type), defaultTimeScale);
         }
 
         private static Func<float> GetProvider(SupportedTime type)

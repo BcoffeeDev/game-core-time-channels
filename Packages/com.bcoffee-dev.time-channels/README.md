@@ -1,93 +1,111 @@
-# game-core-time-channels
+# Time Channels for Unity
 
-A lightweight and highly controllable time channel system for Unity — built to replace Unity's global time logic with modular, per-system control.
+A lightweight, modular time control system that replaces Unity's global `Time.timeScale` with per-system time scaling.
 
-Unlike Unity’s built-in time system (e.g., `Time.timeScale`), which applies globally, this package allows each gameplay system (like weather, enemies, UI, or players) to operate on its own independently scaled timeline. This enables highly modular behaviors — such as pausing weather while letting players move, slowing enemies while keeping animations smooth, or simulating parallel time effects — that are otherwise difficult or impossible with Unity’s default timing model.
+## Why Use Time Channels?
 
----
+Unity's `Time.timeScale` affects everything globally. Time Channels let you:
 
-## ✨ Features
+- Control individual systems independently
+- Pause UI while gameplay continues  
+- Create slow-motion effects for specific objects
+- Run multiple timelines simultaneously
 
-- 🎛 **Per-System Time Scaling** — apply different `TimeScale` values to player, weather, enemies, etc.
-- 🧱 **Modular Architecture** — clearly separates channel creation, management, and usage.
-- 🔑 **String-Based Channel Naming** — register and retrieve custom time channels easily.
-- 🔄 **Pause/Resume Per Channel** — control specific systems without affecting the whole game.
-- 📦 **UPM-ready structure** — designed for Unity `Packages/com.bcoffee-dev.time-channels`.
+## Quick Start
 
----
-
-## 📦 Installation
-
-You can install this package via Git URL by adding the following to your `manifest.json`:
-
-```json
-"com.bcoffee-dev.time-channels": "https://github.com/BcoffeeDev/game-core-time-channels.git?path=Packages/com.bcoffee-dev.time-channels"
-```
-
-Or use Unity Package Manager:
-
-1. Open **Window > Package Manager**
-2. Click the **+** button and select **Add package from Git URL...**
-3. Paste the URL:
-   ```
-   https://github.com/BcoffeeDev/game-core-time-channels.git?path=Packages/com.bcoffee-dev.time-channels
-   ```
-
-Make sure you are using Unity 2019.4 or newer to support Git-based packages.
-
----
-
-## 🚀 Getting Started
-
-### 1. Register a time channel
+### Basic Usage
 
 ```csharp
+// Register a time channel
 TimeChannelManager.Register("Player", SupportedTime.DeltaTime);
-```
 
-### 2. Access time in Update loop
-
-```csharp
+// Use in your Update loop
 float dt = TimeChannelManager.Get("Player").DeltaTime;
-```
+transform.Translate(Vector3.forward * speed * dt);
 
-### 3. Change time scale at runtime
-
-```csharp
+// Control time scale
 TimeChannelManager.Get("Player").TimeScale = 0.5f; // Slow motion
 ```
 
-## ⚙️ Advanced Usage
+### Advanced Usage with Signals
 
-- You can bypass the built-in string-based manager and create channels manually:
-  
-  ```csharp
-  var customChannel = TimeChannelFactory.Create(SupportedTime.FixedDeltaTime);
-  customChannel.TimeScale = 0.8f;
-  float dt = customChannel.DeltaTime;
-  ```
+```csharp
+public class MovingObject : MonoBehaviour
+{
+    [SerializeField] private TimeChannelSignal signal;
+    
+    void Update()
+    {
+        // Automatically uses the signal's time channel
+        float dt = signal.Channel.DeltaTime;
+        transform.Translate(Vector3.forward * speed * dt);
+    }
+}
+```
 
-- Although this package uses a string-based system to register and access channels, you're free to implement your own mapping layer using `enum`, `Guid`, or any custom key system that fits your architecture.
+## Core Components
+
+| Component | Purpose |
+|-----------|---------|
+| `TimeChannelManager` | Register and manage named channels |
+| `TimeChannel` | Core time channel with `DeltaTime` and `TimeScale` |
+| `TimeChannelFactory` | Create standalone channels |
+| `TimeChannelSignal` | Advanced time control effects |
+
+## Common Patterns
+
+**Pause/Resume System:**
+```csharp
+var channel = TimeChannelManager.Get("Enemies");
+float prevScale = channel.TimeScale;
+
+// Pause
+channel.TimeScale = 0f;
+
+// Resume  
+channel.TimeScale = prevScale;
+```
+
+**Independent Timelines:**
+```csharp
+// Different systems, different time scales
+TimeChannelManager.Register("Player", SupportedTime.DeltaTime);
+TimeChannelManager.Register("Weather", SupportedTime.DeltaTime);
+TimeChannelManager.Register("UI", SupportedTime.UnscaledDeltaTime);
+
+TimeChannelManager.Get("Player").TimeScale = 1.0f;   // Normal speed
+TimeChannelManager.Get("Weather").TimeScale = 0.3f;  // Slow weather
+TimeChannelManager.Get("UI").TimeScale = 1.0f;       // Always normal
+```
+
+## Samples
+
+Import samples via **Window > Package Manager > Time Channels > Samples**:
+
+- **BasicExample**: Fundamental usage patterns
+- **TimeControlExample**: Advanced effects with `TimeChannelSignal`
+
+## Best Practices
+
+- Register channels early (e.g., in `Awake()` or `Start()`)
+- Use meaningful channel names ("Player", "Enemies", "Weather")
+- Clean up channels when no longer needed with `TimeChannelManager.Unregister()`
+- Avoid mixing Unity's global `Time.timeScale` with Time Channels
+
+## Events and Callbacks
+
+```csharp
+var channel = TimeChannelManager.Get("Player");
+channel.OnTimeScaleChanged += (newScale) => {
+    Debug.Log($"Player time scale changed to: {newScale}");
+};
+```
+
+## Requirements
+
+- Unity 2019.4 or newer
+- No additional dependencies
 
 ---
 
-## 🧪 Sample Included
-
-This package includes a basic usage sample available via Unity's Package Manager.
-
-### To import the sample:
-
-1. Open **Window > Package Manager**
-2. Select `Time Channels`
-3. Click the **Samples** tab
-4. Click **Import** on **BasicExample**
-
-The sample demonstrates:
-- Independent time control for player and weather
-- Toggling movement and raindrops via keyboard/mouse
-
----
-
-## 📄 License
-
-MIT License © 2025 [Bcoffee](https://github.com/bcoffee0630)
+For more examples and detailed documentation, visit the [GitHub repository](https://github.com/bcoffee0630/game-core-time-channels).
