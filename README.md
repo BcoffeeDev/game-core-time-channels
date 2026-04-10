@@ -30,7 +30,7 @@ Unity's built-in `Time.timeScale` affects the entire game globally, which limits
 
 1. Open **Window > Package Manager**
 2. Click the **+** button and select **"Add package from git URL"**
-3. Enter: `https://github.com/bcoffee0630/game-core-time-channels.git`
+3. Enter: `https://github.com/BcoffeeDev/game-core-time-channels.git`
 4. Click **Add**
 
 ### Requirements
@@ -206,7 +206,7 @@ See [LICENSE](LICENSE) for more details.
 
 If you encounter any issues or have questions:
 
-1. Check the [Issues](https://github.com/bcoffee0630/game-core-time-channels/issues) page
+1. Check the [Issues](https://github.com/BcoffeeDev/game-core-time-channels/issues) page
 2. Create a new issue with detailed information
 3. Include Unity version, error messages, and reproduction steps
 
